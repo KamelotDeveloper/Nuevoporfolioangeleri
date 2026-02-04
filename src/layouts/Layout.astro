@@ -1,0 +1,52 @@
+---
+import Header from '../components/Header.astro';
+
+const title = 'Giuliano Angeleri | IA, Automatización y Desarrollo Web';
+const description = 'Portfolio profesional de Giuliano Angeleri: automatización con IA, flujos de trabajo (n8n), Python, UX/UI y desarrollo web.';
+const ogImage = '/avatar.png';
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={ogImage} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="icon" href="/avatar.png" />
+
+    <!-- Tailwind (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" />
+
+    <style>
+      html { scroll-behavior: smooth; }
+      .container-max { max-width: 1100px; }
+      .focus-ring:focus { outline: 2px solid rgba(59,130,246,.6); outline-offset: 2px; }
+    </style>
+  </head>
+  <body class="bg-gray-50 text-gray-900 antialiased overflow-x-hidden">
+    <Header />
+    <main class="container-max mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <slot />
+    </main>
+    <footer class="border-t border-gray-200">
+      <div class="container-max mx-auto px-4 sm:px-6 lg:px-8 py-8 text-sm text-gray-500">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <p>© {new Date().getFullYear()} Giuliano Angeleri.</p>
+          <p class="text-gray-400">Hecho con Astro + Tailwind.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

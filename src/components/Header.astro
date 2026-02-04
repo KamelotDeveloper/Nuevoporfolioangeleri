@@ -1,0 +1,116 @@
+---
+const links = [
+  { href: '#inicio', label: 'Inicio' },
+  { href: '#sobre-mi', label: 'Sobre mí' },
+  { href: '#proyectos', label: 'Proyectos' },
+  { href: '#certificaciones', label: 'Certificaciones' },
+  { href: '#contacto', label: 'Contacto' },
+];
+---
+
+<header class="sticky top-0 z-50 backdrop-filter backdrop-blur bg-white/80 border-b border-gray-200">
+  <div class="container-max mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="h-16 flex items-center justify-between">
+      <a href="#inicio" class="flex items-center gap-3 focus-ring" aria-label="Ir al inicio">
+        <img src="/avatar.jpg" alt="Foto de perfil" class="w-9 h-9 rounded-full object-cover border border-gray-200" />
+        <div class="leading-tight">
+          <p class="text-sm font-semibold text-gray-900">Giuliano Angeleri</p>
+          <p class="text-xs text-gray-500">IA · Automatización · Desarrollo Web</p>
+        </div>
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="hidden md:flex items-center gap-6" aria-label="Navegación principal">
+        {links.map((l) => (
+          <a href={l.href} class="text-sm font-medium text-gray-600 hover:text-gray-900 focus-ring">
+            {l.label}
+          </a>
+        ))}
+        <div class="flex items-center gap-3">
+          <a
+            href="https://www.linkedin.com/in/giulianoangeleri"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm font-medium text-blue-600 hover:text-blue-700 focus-ring"
+          >
+            LinkedIn
+          </a>
+          <a
+            href="https://github.com/KamelotDeveloper"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm font-medium text-blue-600 hover:text-blue-700 focus-ring"
+          >
+            GitHub
+          </a>
+        </div>
+      </nav>
+
+      <!-- Mobile toggle -->
+      <button
+        id="menuToggle"
+        class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-md border border-gray-200 focus-ring"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="mobileMenu"
+        type="button"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="md:hidden hidden border-t border-gray-200 bg-white">
+    <div class="container-max mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <nav class="grid gap-2" aria-label="Navegación móvil">
+        {links.map((l) => (
+          <a href={l.href} class="py-2 text-sm font-medium text-gray-700 hover:text-gray-900 focus-ring">
+            {l.label}
+          </a>
+        ))}
+        <div class="pt-3 mt-2 border-t border-gray-100 flex gap-4">
+          <a
+            href="https://www.linkedin.com/in/giulianoangeleri"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm font-medium text-blue-600 hover:text-blue-700 focus-ring"
+          >
+            LinkedIn
+          </a>
+          <a
+            href="https://github.com/KamelotDeveloper"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm font-medium text-blue-600 hover:text-blue-700 focus-ring"
+          >
+            GitHub
+          </a>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('menuToggle');
+  const menu = document.getElementById('mobileMenu');
+
+  function setOpen(isOpen) {
+    menu.classList.toggle('hidden', !isOpen);
+    btn.setAttribute('aria-expanded', String(isOpen));
+  }
+
+  btn?.addEventListener('click', () => {
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+    setOpen(!isOpen);
+  });
+
+  // Cierra el menú al navegar
+  menu?.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target && target.tagName === 'A') setOpen(false);
+  });
+</script>

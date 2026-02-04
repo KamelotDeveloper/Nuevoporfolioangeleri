@@ -1,0 +1,88 @@
+<section id="contacto" class="py-10">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+    <div class="lg:col-span-5">
+      <p class="text-sm font-semibold text-blue-600">Contacto</p>
+      <h2 class="mt-2 text-3xl font-extrabold text-gray-900">Presupuestos sin cargo</h2>
+      <p class="mt-3 text-gray-600 leading-relaxed">
+        Contame qué querés lograr (web, automatización, integración o mejora UX/UI) y te devuelvo una propuesta con alcance y próximos pasos.
+      </p>
+
+      <div class="mt-6 space-y-3">
+        <a class="focus-ring block text-sm font-semibold text-blue-600 hover:text-blue-700" href="mailto:angelerigiuliano@gmail.com">
+          Email: angelerigiuliano@gmail.com
+        </a>
+        <a class="focus-ring block text-sm font-semibold text-blue-600 hover:text-blue-700" href="https://wa.me/543571591614" target="_blank" rel="noopener noreferrer">
+          WhatsApp: +54 3571 591614
+        </a>
+        <a class="focus-ring block text-sm font-semibold text-blue-600 hover:text-blue-700" href="https://www.instagram.com/gamarket.ing/" target="_blank" rel="noopener noreferrer">
+          Instagram: @gamarket.ing
+        </a>
+      </div>
+
+      <div class="mt-8 rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
+        <h3 class="text-base font-bold text-gray-900">Antes de escribir</h3>
+        <ul class="mt-3 space-y-2 text-sm text-gray-700">
+          <li class="flex gap-2"><span class="mt-1 w-2 h-2 rounded-full bg-blue-600"></span>Objetivo (ventas, ahorro de tiempo, orden de procesos)</li>
+          <li class="flex gap-2"><span class="mt-1 w-2 h-2 rounded-full bg-blue-600"></span>Qué sistema usás hoy (web, planillas, CRM, WhatsApp, etc.)</li>
+          <li class="flex gap-2"><span class="mt-1 w-2 h-2 rounded-full bg-blue-600"></span>Plazo aproximado</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="lg:col-span-7">
+      <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+        <h3 class="text-lg font-bold text-gray-900">Enviar mensaje</h3>
+        <p class="mt-1 text-sm text-gray-600">Formulario simple (llega directo a tu email).</p>
+
+        <form action="https://formsubmit.co/angelerigiuliano@gmail.com" method="POST" class="mt-6 grid grid-cols-1 gap-4">
+          <input type="hidden" name="_subject" value="Nuevo contacto desde el portfolio" />
+          <input type="hidden" name="_captcha" value="false" />
+
+          <label class="grid gap-1">
+            <span class="text-sm font-semibold text-gray-700">Nombre y apellido</span>
+            <input
+              name="name"
+              type="text"
+              required
+              placeholder="Juan Pérez"
+              class="focus-ring w-full px-3 py-2 border border-gray-300 rounded-md"
+            />
+          </label>
+
+          <label class="grid gap-1">
+            <span class="text-sm font-semibold text-gray-700">Email</span>
+            <input
+              name="email"
+              type="email"
+              required
+              placeholder="juan@ejemplo.com"
+              class="focus-ring w-full px-3 py-2 border border-gray-300 rounded-md"
+            />
+          </label>
+
+          <label class="grid gap-1">
+            <span class="text-sm font-semibold text-gray-700">Mensaje</span>
+            <textarea
+              name="message"
+              rows="5"
+              required
+              placeholder="Hola, necesito automatizar..."
+              class="focus-ring w-full px-3 py-2 border border-gray-300 rounded-md"
+            ></textarea>
+          </label>
+
+          <div class="flex flex-col sm:flex-row gap-3">
+            <button type="submit" class="focus-ring inline-flex items-center justify-center px-5 py-3 rounded-md bg-blue-600 text-white font-semibold hover:bg-blue-700">
+              Enviar
+            </button>
+            <a href="https://wa.me/543571591614" target="_blank" rel="noopener noreferrer" class="focus-ring inline-flex items-center justify-center px-5 py-3 rounded-md border border-gray-300 text-gray-900 font-semibold hover:bg-gray-50">
+              Prefiero WhatsApp
+            </a>
+          </div>
+
+          <p class="text-xs text-gray-500">Al enviar aceptás que te responda por email o WhatsApp según el medio que elijas.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
