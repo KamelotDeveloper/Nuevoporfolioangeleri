@@ -1,0 +1,55 @@
+---
+import type { Lang } from '../i18n/translations';
+---
+
+<a
+  href="javascript:void(0)"
+  id="lang-toggle"
+  class="focus-ring inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-gray-200 dark:border-gray-600 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+  aria-label="Cambiar idioma"
+>
+  <span id="lang-es" class="font-semibold">ES</span>
+  <span class="text-gray-400">/</span>
+  <span id="lang-en">EN</span>
+</a>
+
+<script>
+  // Get current path and language
+  const pathParts = window.location.pathname.split('/').filter(Boolean);
+  const currentLang = (pathParts[0] === 'en' ? 'en' : 'es') as 'es' | 'en';
+  const otherLang = currentLang === 'es' ? 'en' : 'es';
+
+  // Update toggle appearance based on current language
+  const esEl = document.getElementById('lang-es');
+  const enEl = document.getElementById('lang-en');
+  
+  if (esEl && enEl) {
+    esEl.classList.toggle('font-semibold', currentLang === 'es');
+    esEl.classList.toggle('text-blue-600', currentLang === 'es');
+    enEl.classList.toggle('font-semibold', currentLang === 'en');
+    enEl.classList.toggle('text-blue-600', currentLang === 'en');
+  }
+
+  // Add click handler to switch languages
+  const toggle = document.getElementById('lang-toggle');
+  toggle?.addEventListener('click', () => {
+    // Get the current path without the language prefix
+    const currentPath = window.location.pathname;
+    let newPath: string;
+    
+    if (currentLang === 'es') {
+      // Going from ES to EN: /es/projects -> /en/projects
+      newPath = currentPath.replace(/^\/es/, '/en');
+    } else {
+      // Going from EN to ES: /en/projects -> /es/projects
+      newPath = currentPath.replace(/^\/en/, '/es');
+    }
+    
+    // If we're at root, go to the other language root
+    if (currentPath === '/' || currentPath === '/es' || currentPath === '/en') {
+      newPath = `/${otherLang}`;
+    }
+    
+    window.location.href = newPath;
+  });
+</script>

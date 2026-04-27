@@ -1,52 +1,71 @@
 ---
 import Header from '../components/Header.astro';
+import '../styles/global.css';
+import { translations, type Lang } from '../i18n/translations';
 
-const title = 'Giuliano Angeleri | IA, Automatización y Desarrollo Web';
-const description = 'Portfolio profesional de Giuliano Angeleri: automatización con IA, flujos de trabajo (n8n), Python, UX/UI y desarrollo web.';
-const ogImage = '/avatar.png';
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'es' } = Astro.props;
+const t = translations[lang];
 ---
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang={lang} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>{title}</title>
-    <meta name="description" content={description} />
+    <title>{t.meta.title}</title>
+    <meta name="description" content={t.meta.description} />
 
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:title" content={t.meta.title} />
+    <meta property="og:description" content={t.meta.description} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content="/avatar.png" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:title" content={t.meta.title} />
+    <meta name="twitter:description" content={t.meta.description} />
 
-    <link rel="icon" href="/avatar.png" />
-
-    <!-- Tailwind (CDN) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" />
-
-    <style>
-      html { scroll-behavior: smooth; }
-      .container-max { max-width: 1100px; }
-      .focus-ring:focus { outline: 2px solid rgba(59,130,246,.6); outline-offset: 2px; }
-    </style>
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1f2937" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Prevent flash of wrong theme -->
+    <script is:inline>
+      const theme = localStorage.getItem('theme') || 'dark';
+      if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
   </head>
-  <body class="bg-gray-50 text-gray-900 antialiased overflow-x-hidden">
-    <Header />
-    <main class="container-max mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <slot />
-    </main>
-    <footer class="border-t border-gray-200">
-      <div class="container-max mx-auto px-4 sm:px-6 lg:px-8 py-8 text-sm text-gray-500">
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-          <p>© {new Date().getFullYear()} Giuliano Angeleri.</p>
-          <p class="text-gray-400">Hecho con Astro + Tailwind.</p>
+  <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-body antialiased overflow-x-hidden transition-colors duration-300">
+    <!-- Skip link para usuarios de teclado -->
+    <a href="#main-content" 
+       class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-md focus:font-medium">
+      {t.footer.skipToContent}
+    </a>
+    
+    <div class="animate-fade-in">
+      <Header lang={lang} />
+      <main id="main-content" class="container-max mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <slot />
+      </main>
+      <footer class="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50">
+        <div class="container-max mx-auto px-4 sm:px-6 lg:px-8 py-8 text-sm text-gray-500 dark:text-gray-400">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <p>© {new Date().getFullYear()} {t.footer.copyright}</p>
+            <p class="text-gray-400 dark:text-gray-500">{t.footer.madeWith}</p>
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
   </body>
 </html>
