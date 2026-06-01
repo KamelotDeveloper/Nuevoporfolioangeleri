@@ -8,17 +8,13 @@
   class="theme-toggle focus-ring rounded-lg p-2 transition-colors"
   aria-label="Cambiar tema"
 >
-  <!-- Sun icon -->
-  <svg id="sun-icon" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <!-- Sun icon (light mode) -->
+  <svg id="sun-icon" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
   </svg>
-  <!-- Moon icon -->
+  <!-- Moon icon (dark mode) -->
   <svg id="moon-icon" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-  </svg>
-  <!-- System icon -->
-  <svg id="system-icon" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
   </svg>
 </button>
 
@@ -32,52 +28,30 @@
   const toggle = document.getElementById('theme-toggle');
   const sunIcon = document.getElementById('sun-icon');
   const moonIcon = document.getElementById('moon-icon');
-  const systemIcon = document.getElementById('system-icon');
 
-  // Theme modes: 'light', 'dark', 'system'
-  type Theme = 'light' | 'dark' | 'system';
+  type Theme = 'light' | 'dark';
   
   const getTheme = (): Theme => {
-    const stored = localStorage.getItem('theme') as Theme;
-    // Default to dark mode for better recruiter appeal
-    return stored || 'dark';
+    return (localStorage.getItem('theme') as Theme) || 'dark';
   };
 
   const setTheme = (theme: Theme) => {
     localStorage.setItem('theme', theme);
-    const root = document.documentElement;
-    
-    if (theme === 'system') {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      root.classList.toggle('dark', prefersDark);
-    } else {
-      root.classList.toggle('dark', theme === 'dark');
-    }
-    
+    document.documentElement.classList.toggle('dark', theme === 'dark');
     updateIcons(theme);
   };
 
   const updateIcons = (theme: Theme) => {
     sunIcon?.classList.toggle('hidden', theme !== 'light');
     moonIcon?.classList.toggle('hidden', theme !== 'dark');
-    systemIcon?.classList.toggle('hidden', theme !== 'system');
   };
 
   // Initialize
   setTheme(getTheme());
 
-  // Toggle on click
+  // Toggle on click: light ↔ dark
   toggle?.addEventListener('click', () => {
     const current = getTheme();
-    const themes: Theme[] = ['light', 'dark', 'system'];
-    const next = themes[(themes.indexOf(current) + 1) % themes.length];
-    setTheme(next);
-  });
-
-  // Listen for system theme changes
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-    if (getTheme() === 'system') {
-      setTheme('system');
-    }
+    setTheme(current === 'light' ? 'dark' : 'light');
   });
 </script>

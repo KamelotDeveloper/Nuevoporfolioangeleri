@@ -12,12 +12,10 @@ const allProjects = [
   { name: 'PE Business Broker', href: 'https://pebusinessbroker.com/', image: '/6a.webp', description: lang === 'es' ? 'Sitio institucional orientado a conversión y contacto.' : 'Institutional website focused on conversion and contact.', tags: ['Astro', 'Performance'] },
   { name: 'Alma Ingeniería', href: 'https://almaingenieria.com.ar/', image: '/alma.png', description: lang === 'es' ? 'Sitio institucional de ingeniería.' : 'Engineering institutional website.', tags: ['Astro', 'UX'] },
   { name: 'Cantera Nini', href: 'https://canteranini.netlify.app/', image: '/cantera.png', description: lang === 'es' ? 'Landing con foco en presencia digital.' : 'Landing focused on digital presence.', tags: ['Landing', 'UX'] },
-  { name: 'Bella Guillita', href: 'https://bellaguillita.store/', image: '/bella.png', description: lang === 'es' ? 'Tienda online con foco en catálogo.' : 'Online store focused on catalog.', tags: ['E-commerce', 'WordPress'] },
+  { name: 'Ordo Web', href: '#', image: '', description: '', tags: [], comingSoon: true },
 ];
 
-const INITIAL_COUNT = 2;
-const initialProjects = allProjects.slice(0, INITIAL_COUNT);
-const hasMore = allProjects.length > INITIAL_COUNT;
+
 ---
 
 <section id="proyectos" class="py-16 sm:py-24 bg-blue-50 dark:bg-gray-800/50">
@@ -45,126 +43,224 @@ const hasMore = allProjects.length > INITIAL_COUNT;
     </a>
   </div>
 
-  <!-- Projects container with gradient -->
+  <!-- Projects carousel -->
   <div class="relative">
-    <!-- Gradient fade overlay (hidden when expanded) -->
-    <div id="projects-fade" class={`absolute bottom-0 left-0 right-0 h-48 pointer-events-none z-10 bg-gradient-to-t from-blue-50 dark:from-gray-800/50 to-transparent transition-opacity duration-300 ${hasMore ? 'opacity-100' : 'opacity-0'}`}></div>
+    <!-- Navigation arrows -->
+    <button id="projects-prev" class="focus-ring absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-20 w-10 h-10 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-all hidden md:flex" aria-label="Anterior">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+    <button id="projects-next" class="focus-ring absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-20 w-10 h-10 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-all hidden md:flex" aria-label="Siguiente">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
 
-    <div id="projects-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {allProjects.map((p, index) => (
-        <a
-          href={p.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          class={`group rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden shadow-md hover:shadow-2xl dark:shadow-gray-900/50 transition-all duration-300 hover:-translate-y-2 focus-ring ${index >= INITIAL_COUNT ? 'projects-hidden' : ''}`}
-          aria-label={`${lang === 'es' ? 'Ver proyecto' : 'View project'}: ${p.name}`}
-        >
-          <div class="relative h-48 bg-gray-100 dark:bg-gray-700 overflow-hidden">
-            <img src={p.image} alt={p.name} width="400" height="300" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-              <span class="text-white text-sm font-medium">{t.projects.visitSite}</span>
-            </div>
-          </div>
-          <div class="p-5">
-            <h3 class="text-base font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{p.name}</h3>
-            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{p.description}</p>
-            <div class="mt-4 flex flex-wrap gap-2">
-              {p.tags.map((tag) => (
-                <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">{tag}</span>
-              ))}
-            </div>
-          </div>
-        </a>
-      ))}
+    <!-- Carousel track -->
+    <div id="projects-track" class="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4 -mb-4 scrollbar-hide">
+      {allProjects.map((p, index) => {
+        const cardClasses = "group rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden shadow-md hover:shadow-2xl dark:shadow-gray-900/50 transition-all duration-300 hover:-translate-y-2 snap-start shrink-0 w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] xl:w-[calc(25%-18px)]";
 
-      </section>
-    {hasMore && (
-      <div id="load-more-container" class="relative z-20 flex justify-center mt-8">
-        <button
-          id="load-more-btn"
-          class="focus-ring inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white dark:bg-gray-800 border-2 border-blue-500 text-blue-600 dark:text-blue-400 font-bold text-lg shadow-lg hover:shadow-xl hover:bg-blue-50 dark:hover:bg-gray-700 hover:border-blue-600 transition-all duration-300 hover:scale-105"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-          <span id="load-more-text">{lang === 'es' ? 'Ver todos los proyectos' : 'View all projects'}</span>
-        </button>
-      </div>
-    )}
+        if (p.comingSoon) {
+          return (
+            <div class={cardClasses}>
+              <div class="relative h-48 bg-gradient-to-br from-blue-600 to-indigo-700 overflow-hidden flex flex-col items-center justify-center">
+                <div class="relative mb-2">
+                  <div class="w-10 h-10 border-[3px] border-white/20 border-t-white rounded-full animate-spin"></div>
+                </div>
+                <span class="text-white text-lg font-bold tracking-tight">Ordo Web</span>
+                <span class="text-blue-200 text-sm font-medium mt-0.5">
+                  {lang === 'es' ? 'Próximamente' : 'Coming soon'}
+                </span>
+                <div class="flex gap-1.5 mt-3">
+                  <div class="w-2 h-2 bg-white/60 rounded-full animate-bounce" style="animation-delay: 0s; animation-duration: 1s"></div>
+                  <div class="w-2 h-2 bg-white/60 rounded-full animate-bounce" style="animation-delay: 0.15s; animation-duration: 1s"></div>
+                  <div class="w-2 h-2 bg-white/60 rounded-full animate-bounce" style="animation-delay: 0.3s; animation-duration: 1s"></div>
+                </div>
+              </div>
+              <div class="p-5">
+                <h3 class="text-base font-bold text-gray-900 dark:text-white">Ordo Web</h3>
+                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+                  {lang === 'es' ? 'Proyecto en desarrollo...' : 'Project in development...'}
+                </p>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300">
+                    {lang === 'es' ? 'Próximamente' : 'Coming Soon'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          );
+        }
+
+        return (
+          <a
+            href={p.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class={cardClasses + " focus-ring"}
+            aria-label={`${lang === 'es' ? 'Ver proyecto' : 'View project'}: ${p.name}`}
+          >
+            <div class="relative h-48 bg-gray-100 dark:bg-gray-700 overflow-hidden">
+              <img src={p.image} alt={p.name} width="400" height="300" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading={index === 0 ? undefined : "lazy"} />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                <span class="text-white text-sm font-medium">{t.projects.visitSite}</span>
+              </div>
+            </div>
+            <div class="p-5">
+              <h3 class="text-base font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{p.name}</h3>
+              <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{p.description}</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                {p.tags.map((tag) => (
+                  <span class="text-xs font-medium px-2.5 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">{tag}</span>
+                ))}
+              </div>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+
+    <!-- Dots indicator -->
+    <div id="projects-dots" class="flex justify-center gap-2 mt-6">
+    </div>
   </div>
 </section>
 
 <style>
-  /* Mobile: show limited with fade */
-  @media (max-width: 767px) {
-    .projects-hidden {
-      display: none;
-    }
-    .projects-hidden.expanded {
-      display: block;
-      animation: fadeSlideIn 0.4s ease-out forwards;
-    }
-    #projects-fade {
-      display: block;
-    }
-    #load-more-container {
-      display: flex;
-    }
+  /* Hide scrollbar */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
-  
-  /* Tablet and up: show all, hide button */
-  @media (min-width: 768px) {
-    #projects-fade {
-      display: none !important;
-    }
-    #load-more-container {
-      display: none !important;
-    }
-    .projects-hidden {
-      display: block !important;
-    }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
-  
-  @keyframes fadeSlideIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 </style>
 
 <script>
-  const loadMoreBtn = document.getElementById('load-more-btn');
-  const loadMoreText = document.getElementById('load-more-text');
-  const loadMoreContainer = document.getElementById('load-more-container');
-  const projectsFade = document.getElementById('projects-fade');
-  const hiddenProjects = document.querySelectorAll('.projects-hidden');
+  const track = document.getElementById('projects-track');
+  const prevBtn = document.getElementById('projects-prev');
+  const nextBtn = document.getElementById('projects-next');
+  const dotsContainer = document.getElementById('projects-dots');
   const isSpanish = window.location.pathname.startsWith('/es');
+  
+  if (track) {
+    const cards = Array.from(track.children) as HTMLElement[];
+    const totalSlides = cards.length;
+    let currentIndex = 0;
+    let autoPlay: ReturnType<typeof setInterval> | null = null;
+    const AUTOPLAY_DELAY = 5000;
 
-  let isExpanded = false;
-
-  loadMoreBtn?.addEventListener('click', () => {
-    isExpanded = !isExpanded;
-    
-    if (isExpanded) {
-      // Show all projects
-      hiddenProjects.forEach((el, index) => {
-        el.classList.add('expanded');
-        (el as HTMLElement).style.animationDelay = `${index * 100}ms`;
-      });
-      
-      // Hide fade and button
-      projectsFade?.classList.add('opacity-0');
-      if (loadMoreContainer) loadMoreContainer.style.display = 'none';
-      
-      // Change button text
-      if (loadMoreText) {
-        loadMoreText.textContent = isSpanish ? 'Ocultar proyectos' : 'Hide projects';
+    // Create dots
+    if (dotsContainer) {
+      for (let i = 0; i < totalSlides; i++) {
+        const dot = document.createElement('button');
+        dot.className = `w-2.5 h-2.5 rounded-full transition-all duration-300 focus-ring ${i === 0 ? 'bg-blue-600 w-6' : 'bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500'}`;
+        dot.setAttribute('aria-label', `${isSpanish ? 'Ir al proyecto' : 'Go to project'} ${i + 1}`);
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
       }
     }
-  });
+
+    function updateDots() {
+      if (!dotsContainer) return;
+      const dots = dotsContainer.children;
+      for (let i = 0; i < dots.length; i++) {
+        const dot = dots[i] as HTMLElement;
+        if (i === currentIndex) {
+          dot.className = 'w-2.5 h-2.5 rounded-full transition-all duration-300 bg-blue-600 w-6';
+        } else {
+          dot.className = 'w-2.5 h-2.5 rounded-full transition-all duration-300 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500';
+        }
+      }
+    }
+
+    function getCardWidth(): number {
+      if (cards.length === 0) return 0;
+      const card = cards[0];
+      const style = getComputedStyle(card);
+      const gap = 24; // gap-6 = 24px
+      // On xl screens: 4 per row → card width = (container - 3*gap) / 4
+      // On lg: 3 per row
+      // On sm: 2 per row
+      // Default: 1 per row
+      return card.offsetWidth + gap;
+    }
+
+    function goTo(index: number) {
+      if (index < 0) index = 0;
+      if (index >= totalSlides) index = totalSlides - 1;
+      currentIndex = index;
+      const step = getCardWidth();
+      track.scrollTo({ left: step * index, behavior: 'smooth' });
+      updateDots();
+      updateArrows();
+    }
+
+    function updateArrows() {
+      if (!prevBtn || !nextBtn) return;
+      prevBtn.style.opacity = currentIndex === 0 ? '0.3' : '1';
+      prevBtn.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
+      nextBtn.style.opacity = currentIndex >= totalSlides - 1 ? '0.3' : '1';
+      nextBtn.style.pointerEvents = currentIndex >= totalSlides - 1 ? 'none' : 'auto';
+    }
+
+    function getCurrentIndex(): number {
+      if (!track) return 0;
+      const step = getCardWidth();
+      if (step === 0) return 0;
+      return Math.round(track.scrollLeft / step);
+    }
+
+    // Navigation
+    nextBtn?.addEventListener('click', () => goTo(currentIndex + 1));
+    prevBtn?.addEventListener('click', () => goTo(currentIndex - 1));
+
+    // Track scroll for syncing
+    track.addEventListener('scroll', () => {
+      currentIndex = getCurrentIndex();
+      updateDots();
+      updateArrows();
+    });
+
+    // Auto-play
+    function startAutoPlay() {
+      stopAutoPlay();
+      autoPlay = setInterval(() => {
+        if (currentIndex >= totalSlides - 1) {
+          goTo(0);
+        } else {
+          goTo(currentIndex + 1);
+        }
+      }, AUTOPLAY_DELAY);
+    }
+
+    function stopAutoPlay() {
+      if (autoPlay) {
+        clearInterval(autoPlay);
+        autoPlay = null;
+      }
+    }
+
+    // Pause on hover
+    track.addEventListener('mouseenter', stopAutoPlay);
+    track.addEventListener('mouseleave', startAutoPlay);
+    // Touch pause
+    track.addEventListener('touchstart', stopAutoPlay);
+    track.addEventListener('touchend', startAutoPlay);
+
+    // Initialize arrows visibility
+    updateArrows();
+
+    // Start autoplay if more than 1 card fits
+    // (check after a tick for layout)
+    requestAnimationFrame(() => startAutoPlay());
+  }
 </script>

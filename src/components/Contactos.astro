@@ -96,9 +96,21 @@ const t = translations[lang];
         <h3 class="text-xl font-bold text-gray-900 dark:text-white">{t.contact.form.title}</h3>
         <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{t.contact.form.subtitle}</p>
 
-        <form action="https://formsubmit.co/angelerigiuliano@gmail.com" method="POST" class="mt-6 grid grid-cols-1 gap-5">
+        <!-- Success banner (hidden by default) -->
+        <div id="form-success" class="hidden rounded-2xl border border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20 p-6 text-center">
+          <div class="w-16 h-16 mx-auto rounded-full bg-green-100 dark:bg-green-800/30 flex items-center justify-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h4 class="text-lg font-bold text-green-800 dark:text-green-300">{lang === 'es' ? '¡Mensaje enviado!' : 'Message sent!'}</h4>
+          <p class="mt-2 text-sm text-green-700 dark:text-green-400">{lang === 'es' ? 'Gracias por contactarme. Te respondo en menos de 24 horas.' : 'Thanks for reaching out. I\'ll reply within 24 hours.'}</p>
+        </div>
+
+        <form id="contact-form" action="https://formsubmit.co/angelerigiuliano@gmail.com" method="POST" class="mt-6 grid grid-cols-1 gap-5">
           <input type="hidden" name="_subject" value={lang === 'es' ? "Nuevo contacto desde el portfolio" : "New contact from portfolio"} />
           <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_next" id="_next" value="" />
 
           <div>
             <label for="name" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
@@ -142,17 +154,48 @@ const t = translations[lang];
             ></textarea>
           </div>
 
-          <button type="submit" class="focus-ring w-full inline-flex items-center justify-center px-6 py-4 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-600/25">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <button id="form-submit-btn" type="submit" class="focus-ring w-full inline-flex items-center justify-center px-6 py-4 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg transition-all hover:scale-[1.02] hover:shadow-lg hover:shadow-blue-600/25 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100">
+            <svg id="btn-icon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-11" />
             </svg>
-            {t.contact.form.submit}
+            <span id="btn-text">{t.contact.form.submit}</span>
+            <svg id="btn-spinner" class="hidden w-5 h-5 mr-2 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+            </svg>
           </button>
 
           <p class="text-xs text-center text-gray-500 dark:text-gray-400">
             {t.contact.form.disclaimer}
           </p>
         </form>
+
+        <script>
+          // Show success message if redirected with ?sent=ok
+          const params = new URLSearchParams(window.location.search);
+          if (params.get('sent') === 'ok') {
+            document.getElementById('form-success')?.classList.remove('hidden');
+            document.getElementById('contact-form')?.classList.add('hidden');
+          }
+
+          // Set _next redirect before submit
+          const nextInput = document.getElementById('_next') as HTMLInputElement;
+          const langPath = window.location.pathname.startsWith('/en') ? '/en' : '/es';
+          if (nextInput) nextInput.value = window.location.origin + langPath + '/?sent=ok';
+
+          // Loading state on submit
+          const isSpanish = window.location.pathname.startsWith('/es');
+          document.getElementById('contact-form')?.addEventListener('submit', () => {
+            const btn = document.getElementById('form-submit-btn') as HTMLButtonElement;
+            const text = document.getElementById('btn-text');
+            const icon = document.getElementById('btn-icon');
+            const spinner = document.getElementById('btn-spinner');
+            if (btn) btn.disabled = true;
+            if (text) text.textContent = isSpanish ? 'Enviando...' : 'Sending...';
+            if (icon) icon.classList.add('hidden');
+            if (spinner) spinner.classList.remove('hidden');
+          });
+        </script>
       </div>
     </div>
   </div>

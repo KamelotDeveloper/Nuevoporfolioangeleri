@@ -7,6 +7,24 @@ interface Props {
 
 const { lang = 'es' } = Astro.props;
 const t = translations[lang];
+
+const icons: Record<string, string> = {
+  sdd: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+  agents: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+  arch: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4',
+  ts: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4',
+  astro: 'M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9',
+  test: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
+};
+
+const cardItems = [
+  { icon: 'sdd', text: 'SDD (Spec-Driven Development)' },
+  { icon: 'agents', text: 'Code Agents & Harnesses' },
+  { icon: 'arch', text: lang === 'es' ? 'Arquitectura de Software' : 'Software Architecture' },
+  { icon: 'ts', text: 'TypeScript / Node.js' },
+  { icon: 'astro', text: 'Astro + React + Tailwind' },
+  { icon: 'test', text: lang === 'es' ? 'Testing y Validación' : 'Testing & Validation' },
+];
 ---
 
 <section id="sobre-mi" class="py-16 sm:py-24">
@@ -45,29 +63,50 @@ const t = translations[lang];
       <div class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 sm:p-8 shadow-lg dark:shadow-gray-900/30 hover:shadow-xl transition-shadow">
         <h3 class="text-xl font-bold text-gray-900 dark:text-white">{lang === 'es' ? 'Lo que puedo aportar a tu proyecto' : 'What I can bring to your project'}</h3>
         <ul class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {[
-            { icon: '⚡', text: lang === 'es' ? 'Automatización de flujos (n8n)' : 'Workflow automation (n8n)' },
-            { icon: '🔗', text: lang === 'es' ? 'Integraciones con APIs' : 'API integrations' },
-            { icon: '🐍', text: 'Python' },
-            { icon: '🎨', text: lang === 'es' ? 'UX/UI moderno y accesible' : 'Modern & accessible UX/UI' },
-            { icon: '🌐', text: 'Astro' },
-            { icon: '📱', text: lang === 'es' ? 'Sitios responsive y rápidos' : 'Fast & responsive websites' },
-          ].map((item) => (
+          {cardItems.map((item) => (
             <li class="flex items-start gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-              <span class="text-xl">{item.icon}</span>
+              <span class="text-blue-600 dark:text-blue-400 shrink-0">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={icons[item.icon] || icons.sdd} />
+                </svg>
+              </span>
               <span class="text-sm text-gray-700 dark:text-gray-300">{item.text}</span>
             </li>
           ))}
         </ul>
 
         <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-          <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">{lang === 'es' ? 'Ver certificaciones' : 'View certifications'}</p>
-          <div class="flex flex-col sm:flex-row gap-3">
-            <a href="/certificado-python-1.pdf" target="_blank" rel="noopener noreferrer" class="focus-ring inline-flex items-center justify-center px-5 py-2.5 rounded-lg border-2 border-blue-600 text-blue-600 dark:text-blue-400 font-semibold hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 transition-all">
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">{lang === 'es' ? 'Certificaciones' : 'Certifications'}</p>
+          <div class="flex flex-wrap gap-2">
+            <!-- Desarrollo -->
+            <a href="/Certificado.jpg" target="_blank" rel="noopener noreferrer" class="focus-ring px-3 py-1.5 text-xs font-medium rounded-full border border-orange-300 dark:border-orange-700 text-orange-700 dark:text-orange-300 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition-colors">
+              HTML & CSS
+            </a>
+            <a href="/desarrollo con ia sdd.pdf" target="_blank" rel="noopener noreferrer" class="focus-ring px-3 py-1.5 text-xs font-medium rounded-full border border-teal-300 dark:border-teal-700 text-teal-700 dark:text-teal-300 hover:bg-teal-50 dark:hover:bg-teal-900/30 transition-colors">
+              {lang === 'es' ? 'Desarrollo con Agentes IA' : 'AI Agents'}
+            </a>
+            <a href="/Certificado-ciberseguridad hacking etico.pdf" target="_blank" rel="noopener noreferrer" class="focus-ring px-3 py-1.5 text-xs font-medium rounded-full border border-red-300 dark:border-red-700 text-red-700 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors">
+              {lang === 'es' ? 'Ciberseguridad' : 'Cybersecurity'}
+            </a>
+            <!-- Diseño -->
+            <a href="/UX desing certificado.pdf" target="_blank" rel="noopener noreferrer" class="focus-ring px-3 py-1.5 text-xs font-medium rounded-full border border-pink-300 dark:border-pink-700 text-pink-700 dark:text-pink-300 hover:bg-pink-50 dark:hover:bg-pink-900/30 transition-colors">
+              UX Design
+            </a>
+            <!-- Lenguajes y otros -->
+            <a href="/certificado-python-2.pdf" target="_blank" rel="noopener noreferrer" class="focus-ring px-3 py-1.5 text-xs font-medium rounded-full border border-green-300 dark:border-green-700 text-green-700 dark:text-green-300 hover:bg-green-50 dark:hover:bg-green-900/30 transition-colors">
+              Python - {lang === 'es' ? 'Nivel 2' : 'Level 2'}
+            </a>
+            <a href="/certificado-python-1.pdf" target="_blank" rel="noopener noreferrer" class="focus-ring px-3 py-1.5 text-xs font-medium rounded-full border border-green-300 dark:border-green-700 text-green-700 dark:text-green-300 hover:bg-green-50 dark:hover:bg-green-900/30 transition-colors">
               Python - {lang === 'es' ? 'Nivel 1' : 'Level 1'}
             </a>
-            <a href="/certificado-python-2.pdf" target="_blank" rel="noopener noreferrer" class="focus-ring inline-flex items-center justify-center px-5 py-2.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
-              Python - {lang === 'es' ? 'Nivel 2' : 'Level 2'}
+            <a href="/Certificado analista de datos.pdf" target="_blank" rel="noopener noreferrer" class="focus-ring px-3 py-1.5 text-xs font-medium rounded-full border border-indigo-300 dark:border-indigo-700 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors">
+              {lang === 'es' ? 'Analista de Datos' : 'Data Analyst'}
+            </a>
+            <a href="/automatizacion-n8n.pdf" target="_blank" rel="noopener noreferrer" class="focus-ring px-3 py-1.5 text-xs font-medium rounded-full border border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors">
+              Workflow Automation
+            </a>
+            <a href="/Certificado Community.png" target="_blank" rel="noopener noreferrer" class="focus-ring px-3 py-1.5 text-xs font-medium rounded-full border border-purple-300 dark:border-purple-700 text-purple-700 dark:text-purple-300 hover:bg-purple-50 dark:hover:bg-purple-900/30 transition-colors">
+              Community Manager
             </a>
           </div>
         </div>

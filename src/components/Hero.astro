@@ -30,8 +30,8 @@ const t = translations[lang];
           </svg>
           {t.hero.ctaProjects}
         </a>
-        <a href="#contacto" class="focus-ring inline-flex items-center justify-center px-6 py-3.5 rounded-lg border-2 border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <a href="#contacto" class="focus-ring inline-flex items-center justify-center px-6 py-3.5 rounded-lg text-gray-500 dark:text-gray-400 font-medium hover:text-gray-700 dark:hover:text-gray-200 transition-all duration-300 group">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
           </svg>
           {t.hero.ctaContact}
@@ -42,7 +42,7 @@ const t = translations[lang];
       <div class="mt-10">
         <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">{t.hero.stackLabel}</p>
         <div class="flex flex-wrap gap-2">
-          {['Python', 'Astro', 'n8n', 'TypeScript', 'React', 'Tailwind', 'Node.js'].map((tech) => (
+          {['TypeScript', 'Astro', 'React', 'Node.js', 'Tailwind', 'SDD', 'Python', 'Jest'].map((tech) => (
             <span class="px-3 py-1.5 text-sm font-mono rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-blue-500 dark:hover:border-blue-500 transition-colors cursor-default">
               {tech}
             </span>
