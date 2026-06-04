@@ -1,4 +1,18 @@
 ---
-// Redirect to Spanish version by default (with BASE_URL for subdirectory)
-return Astro.redirect(import.meta.env.BASE_URL + '/es/');
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import ProyectosDev from '../components/ProyectosDev.astro';
+import Proyectos from '../components/Proyectos.astro';
+import Certificaciones from '../components/Certificaciones.astro';
+import Contactos from '../components/Contactos.astro';
 ---
+
+<Layout>
+  <Hero />
+  <About />
+  <ProyectosDev />
+  <Proyectos />
+  <Certificaciones />
+  <Contactos />
+</Layout>
