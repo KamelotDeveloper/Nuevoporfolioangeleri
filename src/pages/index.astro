@@ -1,4 +1,4 @@
 ---
-// Redirect to Spanish version by default
-return Astro.redirect('/es/');
+// Redirect to Spanish version by default (with BASE_URL for subdirectory)
+return Astro.redirect(import.meta.env.BASE_URL + '/es/');
 ---
