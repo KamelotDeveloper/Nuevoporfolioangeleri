@@ -58,7 +58,7 @@ const t = translations[lang];
         
         <div class="relative rounded-3xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl dark:shadow-gray-900/50 overflow-hidden group">
           <div class="relative overflow-hidden">
-            <img src="/avatar.jpg" alt="Giuliano Angeleri" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" />
+            <img src={import.meta.env.BASE_URL + "/avatar.jpg"} alt="Giuliano Angeleri" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500" />
             <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
             <div class="absolute bottom-4 left-4 right-4">
               <div class="flex items-center gap-2">

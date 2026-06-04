@@ -23,7 +23,7 @@ const t = translations[lang];
     <meta property="og:title" content={t.meta.title} />
     <meta property="og:description" content={t.meta.description} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/avatar.png" />
+    <meta property="og:image" content={import.meta.env.BASE_URL + "/avatar.png"} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={t.meta.title} />
@@ -31,7 +31,7 @@ const t = translations[lang];
 
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#1f2937" media="(prefers-color-scheme: dark)" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={import.meta.env.BASE_URL + "/favicon.svg"} />
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

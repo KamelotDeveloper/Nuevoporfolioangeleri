@@ -23,7 +23,7 @@ const links = [
   <div class="container-max mx-auto px-4 sm:px-6 lg:px-8">
     <div class="h-16 flex items-center justify-between">
       <a href="#inicio" class="flex items-center gap-3 focus-ring" aria-label="Ir al inicio">
-        <img src="/avatar.jpg" alt="Foto de perfil" class="w-9 h-9 rounded-full object-cover border border-gray-200 dark:border-gray-600" />
+        <img src={import.meta.env.BASE_URL + "/avatar.jpg"} alt="Foto de perfil" class="w-9 h-9 rounded-full object-cover border border-gray-200 dark:border-gray-600" />
         <div class="leading-tight">
           <p class="text-sm font-semibold text-gray-900 dark:text-white">Giuliano Angeleri</p>
           <p class="text-xs text-gray-500 dark:text-gray-400">{t.header.tagline}</p>
