@@ -12,8 +12,8 @@ const baseUrl = import.meta.env.BASE_URL;
 const allProjects = [
   { name: 'PE Business Broker', href: 'https://pebusinessbroker.com/', image: baseUrl + '/6a.webp', description: lang === 'es' ? 'Sitio institucional orientado a conversión y contacto.' : 'Institutional website focused on conversion and contact.', tags: ['Astro', 'Performance'] },
   { name: 'Alma Ingeniería', href: 'https://almaingenieria.com.ar/', image: baseUrl + '/alma.png', description: lang === 'es' ? 'Sitio institucional de ingeniería.' : 'Engineering institutional website.', tags: ['Astro', 'UX'] },
-  { name: 'Cantera Nini', href: 'https://canteranini.netlify.app/', image: baseUrl + '/cantera.png', description: lang === 'es' ? 'Landing con foco en presencia digital.' : 'Landing focused on digital presence.', tags: ['Landing', 'UX'] },
-  { name: 'Ordo Web', href: '#', image: '', description: '', tags: [], comingSoon: true },
+  { name: 'Cantera Nini', href: 'https://kamelotdeveloper.github.io/cantera-nini-v2/', image: baseUrl + '/cantera.png', description: lang === 'es' ? 'Landing con foco en presencia digital.' : 'Landing focused on digital presence.', tags: ['Landing', 'UX'] },
+  { name: 'Ordo Landing', href: 'https://kamelotdeveloper.github.io/Ordo-landing/', image: '', description: lang === 'es' ? 'Landing institucional del proyecto Ordo ERP.' : 'Institutional landing for the Ordo ERP project.', tags: ['Landing', 'UX'] },
 ];
 
 
@@ -103,11 +103,23 @@ const allProjects = [
             class={cardClasses + " focus-ring"}
             aria-label={`${lang === 'es' ? 'Ver proyecto' : 'View project'}: ${p.name}`}
           >
-            <div class="relative h-48 bg-gray-100 dark:bg-gray-700 overflow-hidden">
-              <img src={p.image} alt={p.name} width="400" height="300" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading={index === 0 ? undefined : "lazy"} />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                <span class="text-white text-sm font-medium">{t.projects.visitSite}</span>
-              </div>
+            <div class="relative h-48 bg-gradient-to-br from-blue-600 to-indigo-700 dark:from-blue-800 dark:to-indigo-900 overflow-hidden flex items-center justify-center">
+              {p.image ? (
+                <>
+                  <img src={p.image} alt={p.name} width="400" height="300" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 absolute inset-0" loading={index === 0 ? undefined : "lazy"} />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <span class="text-white text-sm font-medium">{t.projects.visitSite}</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.5 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5z" />
+                  </svg>
+                  <span class="text-white/60 text-sm font-medium mt-2 block">{p.name}</span>
+                </>
+              )}
             </div>
             <div class="p-5">
               <h3 class="text-base font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{p.name}</h3>
