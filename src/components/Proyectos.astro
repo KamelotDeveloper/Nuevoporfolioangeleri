@@ -13,7 +13,7 @@ const allProjects = [
   { name: 'PE Business Broker', href: 'https://pebusinessbroker.com/', image: baseUrl + '/6a.webp', description: lang === 'es' ? 'Sitio institucional orientado a conversión y contacto.' : 'Institutional website focused on conversion and contact.', tags: ['Astro', 'Performance'] },
   { name: 'Alma Ingeniería', href: 'https://almaingenieria.com.ar/', image: baseUrl + '/alma.png', description: lang === 'es' ? 'Sitio institucional de ingeniería.' : 'Engineering institutional website.', tags: ['Astro', 'UX'] },
   { name: 'Cantera Nini', href: 'https://kamelotdeveloper.github.io/cantera-nini-v2/', image: baseUrl + '/cantera.png', description: lang === 'es' ? 'Landing con foco en presencia digital.' : 'Landing focused on digital presence.', tags: ['Landing', 'UX'] },
-  { name: 'Ordo Landing', href: 'https://kamelotdeveloper.github.io/Ordo-landing/', image: 'https://kamelotdeveloper.github.io/Ordo-landing/1.webp', description: lang === 'es' ? 'Landing institucional del proyecto Ordo ERP.' : 'Institutional landing for the Ordo ERP project.', tags: ['Landing', 'UX'] },
+  { name: 'Ordo Landing', href: 'https://kamelotdeveloper.github.io/Ordo-landing/', image: baseUrl + '/ordo.webp', description: lang === 'es' ? 'Landing institucional del proyecto Ordo ERP.' : 'Institutional landing for the Ordo ERP project.', tags: ['Landing', 'UX'] },
 ];
 
 
@@ -276,4 +276,18 @@ const allProjects = [
     // (check after a tick for layout)
     requestAnimationFrame(() => startAutoPlay());
   }
+</script>
+
+<script>
+  // Global image fallback: replace broken project card images with placeholder
+  (function () {
+    const fallbackSrc = '/ordo-placeholder.svg';
+    document.querySelectorAll('#projects-track img').forEach(function (img) {
+      img.addEventListener('error', function () {
+        if (this.getAttribute('src') !== fallbackSrc) {
+          this.setAttribute('src', fallbackSrc);
+        }
+      });
+    });
+  })();
 </script>
